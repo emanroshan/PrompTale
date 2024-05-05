@@ -1,0 +1,89 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="{% static 'base.css' %}">
+
+        <title>PromptTale</title>
+    </head>
+    <body>
+        <div class="top_nav">
+            <a class="top_nav_btn" href="{% url 'home' %}">Home</a>
+            <a class="top_nav_btn">About</a>
+            {% if request.user.is_authenticated %}
+            <a class="top_nav_btn" href="{% url 'stories' %}">Stories</a>
+            <div class="user_name_sec">
+                <p>Hello, {{request.user.username}}</p>
+            </div>
+            <div class="profile_sec">
+                {% if request.user.profile_picture %}
+                <img class="profile" src="{{ request.user.profile_picture.url }}" alt="Profile Picture">
+                {% else %}
+                <img class="profile" src="{% static 'default_profile.png' %}" alt="Profile Picture">
+                {% endif %}
+                <div class="profile_dropdown">
+                    <img class="dropdown_close_btn" src="{% static 'dropdown_close_btn.png' %}" alt="Profile Picture">
+                    <div class="profile_dropdown_top">  
+                        {% if request.user.profile_picture %}
+                        <img class="dropdown_profile" src="{{ request.user.profile_picture.url }}" alt="Profile Picture">
+                        {% else %}
+                        <img class="dropdown_profile" src="{% static 'default_profile.png' %}" alt="Profile Picture">
+                        {% endif %}
+                        <p class="dropdown_text">{{request.user.email}}</p>
+                        <div class="user_rating">
+                            {% for i in ratings %}
+                                {% if owner_rating >= i %}
+                                    <span class="fa fa-star checked"></span>
+                                {% else %}
+                                    <span class="fa fa-star unchecked"></span>
+                                {% endif %}
+                            {% endfor %}
+                            <span class="rating-text">{{ owner_rating|floatformat:"1" }}</span>
+                        </div>
+                    </div>
+                    <div class="profile_dropdown_middle">
+                        <p>Stories: {{ book_count }}</p>
+                    </div>
+                    <div class="profile_dropdown_bottom">
+                        <a class="dropdown_btn" href="{% url 'update' %}"><i class="fa fa-pencil"></i>Edit Profile</a>
+                        <a class="dropdown_btn" href="{% url 'logout' %}"><i class="fa fa-sign-out"></i>Log out</a>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <a class="top_nav_btn" href="{% url 'register' %}">Sign up</a>
+            <a id="login_btn" class="top_nav_btn" class="profile_sec" href="{% url 'login' %}">Log in</a>
+            {% endif %}
+        </div>
+        {% block content %}
+
+        {% endblock content %}
+    </body>
+
+</html>
+
+<script>
+
+    var profileElement = document.querySelector('.profile');
+    if (profileElement) {
+        profileElement.addEventListener('click', function(event) {
+            event.stopPropagation(); // Prevent the click event from bubbling up
+            document.querySelector('.profile_dropdown').classList.add('visible');
+        });
+   
+        document.addEventListener('click', function(event) {
+            const profileDropdown = document.querySelector('.profile_dropdown');
+            if (!event.target.closest('.profile') && !event.target.closest('.profile_dropdown')) {
+                profileDropdown.classList.remove('visible');
+            }
+
+        });
+    
+        document.querySelector('.dropdown_close_btn').addEventListener('click', function(event) {
+            event.stopPropagation(); // Prevent the click event from bubbling up
+            document.querySelector('.profile_dropdown').classList.remove('visible');
+        });
+    }
+</script>

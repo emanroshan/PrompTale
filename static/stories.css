@@ -1,0 +1,133 @@
+.loading {
+    display: none;
+    width: 100%; 
+    height: 100%; 
+    position: fixed; 
+    z-index: 10; 
+    background-color: white; 
+    top: 0;
+    justify-content: center;
+    align-items: center;
+}
+.loading img {
+    width: 100px;
+    height: 100px;
+}
+#prompt-container {
+    width: 100%;
+    height: 70px;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    bottom: 0;
+    background:  linear-gradient(to right, rgba(36, 13, 141, 0.5), rgba(255, 189, 65, 0.5));
+    backdrop-filter: blur(10px);
+}
+.prompt-button {
+    height: 50px;
+    width: 50px;
+    background: white;
+    border-radius: 100%;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    margin: 10px 0px 10px 10px;
+}
+.prompt-button img{
+    height: 15px;
+    width: 15px;
+    margin: 17.5px;
+}
+
+#prompt-input-field {
+    width: 70%;
+    height: 30px;
+    margin: 10px 0px 10px 0px;
+    border-radius: 30px;
+    padding: 10px 20px 10px 20px;
+    border: none;
+    outline: none;
+    resize: none;
+}
+.main-body {
+    background-color: white;
+    margin: 100px 0px 100px 0px;
+    background-color: rgb(240, 240, 240);
+}
+.main-body h2 {
+    margin: 25px 25px 0px 35px;
+}
+.scrollmenu {
+    width: 100%;
+    height: fit-content;
+    white-space: nowrap;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Hide the default scrollbar for Firefox */
+    scroll-snap-type: x mandatory; /* Enable scroll snapping */
+    user-select: none; /* Disable text selection while dragging */
+}
+/*to hide the scrollbars*/
+::-webkit-scrollbar {
+    display: none;
+}
+/* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
+.flip-card {
+    width: 5vw;
+    height: 300px;
+    margin: 3vw;
+    border: none;
+    perspective: 1000px; /* Remove this if you don't want the 3D effect */
+    display: inline-block;
+}
+
+/* This container is needed to position the front and back side */
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+    
+}
+
+/* Do an horizontal flip when you move the mouse over the flip box container */
+.flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+/* Position the front and back side */
+.flip-card-front, .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0px 0px 10px 10px rgb(0, 0, 0, 0.1);
+    -webkit-backface-visibility: hidden; /* Safari */
+    backface-visibility: hidden;
+}
+/* Style the front side (fallback if image is missing) */
+.flip-card-front {
+    background-color: rgb(255, 255, 255);
+    color: black;
+}
+/* Style the back side */
+.flip-card-back {
+    background-color: rgb(117, 98, 201);
+    color: white;
+    transform: rotateY(180deg);
+}
+.flip-card-back p {
+    white-space: pre-wrap; /* Allow line breaks */
+    word-wrap: break-word; /* Allow long words to wrap */
+}
+.flip-card-back button {
+    background: black;
+    color: white;
+    border: none;
+    width: 60px;
+    padding: 5px;
+    margin: 5px;
+    margin-top: 100px;
+}

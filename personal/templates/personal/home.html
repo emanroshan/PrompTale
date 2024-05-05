@@ -1,0 +1,232 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="main-body">
+    {% for genre in genres %}
+    <h2> {{genre}} </h2>
+    <div id="container" class="scrollmenu">
+        {% for book in story_books %}
+        {% if book.is_public and book.description == genre %}
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <img class="story-cover" src="{{ book.images.first.image.url }}" alt="">
+                    <h3>{{ book.title }}</h3>
+                </div>
+                <div class="flip-card-back">                    
+                    <p> Written By {{ book.username }}</p>
+                    <a href="{% url 'view_story' book.id %}" class="view-story-button btn">
+                        <i class="fa fa-expand"></i>
+                    </a>
+                    <div class="user_rating">
+                        <form method="post">{% csrf_token %}
+                            {% for i in ratings %}
+                                {% if book.rating >= i %}
+                                    <span onclick="giveRating(`{{ book.id }}`, '{{i}}')" class="fa fa-star story_rating marked"></span>
+                                {% else %}
+                                    <span onclick="giveRating(`{{ book.id }}`, '{{i}}')" class="fa fa-star story_rating"></span>
+                                {% endif %}
+                            {% endfor %}
+                            <span class="rating-text">{{ book.rating|floatformat:"1" }}</span>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+    {% endfor %}
+</div>
+
+<style>
+    .loading {
+    display: none;
+    width: 100%; 
+    height: 100%; 
+    position: fixed; 
+    z-index: 10; 
+    background-color: white; 
+    top: 0;
+    justify-content: center;
+    align-items: center;
+}
+.story-cover {
+    width: 100%;
+    height: 70%;
+    border-radius: 20px 20px 0px 0px;
+}
+.rating-text {
+    margin: 5px;
+}
+.user_rating {
+    position: absolute;
+    left: 50%;
+    width: 100%;
+    top: 70%;
+    transform: translate(-50%, 50%);
+}
+
+.loading img {
+    width: 100px;
+    height: 100px;
+}
+.main-body {
+    background-color: white;
+    margin: 100px 0px 100px 0px;
+    background-color: rgb(240, 240, 240);
+}
+.main-body h2 {
+    margin: 10px 10px 10px 20px;
+    font-size: 30px;
+    font-family: 'Marker Felt', fantasy;
+    
+}
+.scrollmenu {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 220px)); /* Automatically arrange items with minimum width of 200px */
+    gap: 40px;
+    justify-content: center; /* Center-align the grid items */
+    align-items: center;
+    margin: 3vw;
+}
+.story_rating {
+    color: white;
+    cursor: pointer;
+}
+.marked {
+    color: orange;
+}
+.hovered {
+    color: gold;
+}
+::-webkit-scrollbar {
+    display: none;
+}
+.flip-card {
+    width: 100%;
+    height: 280px;
+    border: none;
+    perspective: 1000px;
+    display: inline-block;
+    margin: auto;
+}
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+    
+}
+.flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0px 0px 10px 10px rgb(0, 0, 0, 0.1);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border-radius: 20px;
+}
+.flip-card-front {
+    background-color: rgb(255, 255, 255);
+    color: black;
+}
+.flip-card-front h3 {
+    padding: 10px;
+    margin: 0;
+    font-family: 'Marker Felt', fantasy;
+}
+.flip-card-back {
+    background-color: rgb(117, 98, 201);
+    color: white;
+    transform: rotateY(180deg);
+}
+.flip-card-back p {
+    position: absolute;
+    left: 50%;
+    top: 20%;
+    margin: 0;
+    transform: translate(-50%, 0%);
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+.flip-card-back button {
+    background: black;
+    color: white;
+    border: none;
+    width: 60px;
+    padding: 5px;
+    margin: 5px;
+    margin-top: 100px;
+}
+.view-story-button {
+    top: 66%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.5);
+    color: rgb(117, 98, 201);
+    cursor: pointer;
+    transition: 0.5s ease-in-out;
+    font-size: 20px;
+    position: absolute;
+    border-radius: 50px;
+    border: none;
+}
+.view-story-button i {
+    margin: 10px;
+}
+
+@media screen and (max-width: 550px) {
+    .main-body h2 {
+        font-size: 20px;
+        margin: 20px;
+    }
+    .flip-card-front, .flip-card-back {
+        border-radius: 20px;
+    }
+    .scrollmenu {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 200px)); /* Automatically arrange items with minimum width of 200px */
+    }
+    .flip-card {
+        height: 250px;
+    }
+
+
+}
+</style>
+
+<script>
+    $(document).ready(function() {
+        $(".story_rating").hover(function() {
+            $(this).addClass("hovered").prevAll(".story_rating").addClass("hovered");
+
+        }, function() {
+            $(this).removeClass("hovered").prevAll(".story_rating").removeClass("hovered");
+        });
+    })
+
+    function giveRating(storyBookId, rating) {
+        var csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/rate/' + storyBookId + '/' + rating + '/');
+        xhr.setRequestHeader('X-CSRFToken', csrfToken);
+        xhr.onload = function () {
+
+            if (xhr.status === 200) {
+            }
+        };
+        xhr.send();
+    }
+</script>
+{% endblock content %}

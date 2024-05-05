@@ -1,0 +1,214 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>jsPDF Template</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
+</head>
+<style>
+    body {
+        margin: 0;
+    }
+    #container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: rgb(240, 240, 240);
+        width: 100%;
+        height: 100%;
+    }
+    .story-title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 70vw;
+        height: 5vw;
+        background-color: rgb(255, 255, 255);
+        border-radius: 2vw;
+        margin: 2vw;
+        box-shadow: 0px 0px 1vw 1vw rgba(0, 0, 0, 0.1);
+        padding: 2vw;
+    }
+    .story-title h {
+        font-size: 2vw;
+    }
+    .page {
+        width: 74vw;
+        margin: 3vw 2vw 2vw 2vw;
+        padding: 2vw;
+        padding-top: 0;
+        background-color: white;
+        box-shadow: 0px 0px 1vw 1vw rgba(0, 0, 0, 0.1);
+        border-radius: 2vw;
+
+    }
+    .text-column {
+        position: relative;
+    }
+    .page textarea {
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        font-size: 1.5vw;
+        box-sizing: border-box;
+        resize: none; /* Prevent resizing */
+        outline: none;
+        border: none;
+        position: absolute;
+        font-family: "Chalkduster", fantasy;
+        background-color: white;
+
+    }
+    .page img {
+        width: 100%;
+        height: auto;
+    }
+    .page-count {
+        padding: 2vw;
+        font-size: 2vw;
+        font-family: "Chalkduster", fantasy;
+
+    }
+    .story-title textarea {
+        font-size: 2vw;
+        width: 100%;
+        text-align: center;
+        resize: none;
+        font-family: "Chalkduster", fantasy;
+        border: none;
+        outline: none;
+        background-color: rgb(255, 255, 255);
+    }
+    .save-story-btn {
+        float: right;
+        margin: 3vw;
+        width: 6vw;
+        height: 3vw;
+        border-radius: 6vw;
+        border: none;
+        background-color: black;
+        color: white;
+        font-size: 1vw;
+        cursor: pointer;
+        box-shadow: 0px 0px 1vw 1vw rgba(0, 0, 0, 0.1);
+    }
+.color-selector {
+    width: 2vw;
+    height: 0;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    visibility: hidden;
+}
+
+.color-label {
+    font-size: 1.2vw;
+    position: relative;
+    cursor: pointer;
+
+}
+.color-container {
+    display: flex;
+    width: 60%;
+}
+.font-selector {
+    margin: 0.8vw;
+    padding: 0;
+    font-size: 1.2vw;
+    border-radius: 0.5vw;
+}
+.font-label {
+    font-size: 1.2vw;
+    position: relative;
+}
+</style>
+<body>
+    <div id="container">
+
+        <form id="colorGroup" method="post" action="save_story/{{ Id }}" enctype="multipart/form-data">{% csrf_token %}
+            <div class="story-title">
+                <textarea name="title">{{ Title }}</textarea>
+            </div>
+            {% for text, image in content %}
+                <table id="page{{forloop.counter}}" class="page" style="background-color: {{ text.color }};">
+                    <colgroup>
+                        <col style="width: 70%;">
+                        <col style="width: 30%;">
+                    </colgroup>
+                    <th class="page-count" colspan="2">Page {{ forloop.counter }}</th>
+                    <tr>
+                        <td class="text-column"><textarea class="page-text" name="text{{ forloop.counter }}" style="font-family: {{ text.font }}; background-color: {{ text.color }};">{{ text.text }}</textarea></td>
+                        <td><img class="page-image" id="image{{ forloop.counter }}" src="{{ image.image.url }}"></td>
+                    </tr>
+                    <tr>
+                        <td class="color-panel">
+                            <div class="color-container">
+                                <h3 class="color-label">Color</h3>
+                                <input class="color-selector" type="color" name="color{{ forloop.counter }}" value="{{ text.color }}">
+                                
+                                <h3 class="font-label">Font:</h3>
+                                <select class="font-selector">
+                                    <option value="Chalkduster">Chalkduster</option>
+                                    <option value="Roboto">Roboto</option>
+                                    <option value="Arial">Arial</option>
+                                    <option value="Times New Roman">Times New Roman</option>
+                                    <option value="Georgia">Georgia</option>
+                                    <option value="Verdana">Verdana</option>
+                                </select>
+                                <input style="display: none;" type="text" value="{{ text.font }}" name="font{{ forloop.counter }}">
+                            </div>
+
+                        </td>
+                    </tr>
+                </table>
+            {% endfor %} 
+            <input class="save-story-btn" type="submit" value="Save">
+        </form>
+    </div>
+</body>
+
+<script>
+        const colorGroup = document.getElementById('colorGroup');
+        const colorDivs = colorGroup.querySelectorAll('.page');
+        const colorText = colorGroup.querySelectorAll('.page-text');
+        const colorPickers = colorGroup.querySelectorAll('input[type="color"]');
+        const fontPickers = colorGroup.querySelectorAll('input[type="text"]');
+        const colorLabel = colorGroup.querySelectorAll('.color-label');
+        const fonts = colorGroup.querySelectorAll('.font-selector');
+
+        colorDivs.forEach((div, index) => {
+            const picker = colorPickers[index];
+            picker.addEventListener('input', function() {
+                div.style.backgroundColor = picker.value;
+            });
+        });
+        colorText.forEach((div, index) => {
+            const picker = colorPickers[index];
+            picker.addEventListener('input', function() {
+                div.style.backgroundColor = picker.value;
+            });
+        });
+        colorLabel.forEach((div, index) => {
+            const picker = colorPickers[index];
+            div.addEventListener('click', function() {
+                picker.click();
+            });
+        });
+        colorText.forEach((div, index) => {
+            const font = fonts[index];
+            const fontPicker = fontPickers[index];
+            font.addEventListener('change', function() {
+                div.style.fontFamily = this.value;
+                fontPicker.value = this.value;
+            })
+        })
+
+
+</script>
+
+</html>
+

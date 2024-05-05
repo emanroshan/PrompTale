@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<div class="form_area">
+    <div class="form_container">
+        <h1>Create Account</h1>
+        <form  method="post">{% csrf_token %}
+
+            {% if registration_form.email.errors %}
+            <input class="input_fields error_field giggle-effect" type="email" name="email" id="inputEmail"  placeholder="Email already occupied!" required autofocus>
+            {% elif registration_form.email.value %}
+            <input class="input_fields" type="email" name="email" id="inputEmail"  placeholder="Email address" required autofocus value="{{ registration_form.email.value }}">
+            {% else %}
+            <input class="input_fields" type="email" name="email" id="inputEmail"  placeholder="Email address" required autofocus>
+            {% endif %}
+            <br>
+
+            {% if registration_form.username.errors %}
+            <input class="input_fields error_field giggle-effect" type="text" name="username" id="inputUserName"  placeholder="Username already exists!" required autofocus>
+            {% elif registration_form.username.value %}
+            <input class="input_fields" type="text" name="username" id="inputUserName"  placeholder="Username" required autofocus value="{{ registration_form.username.value }}">
+            {% else %}
+            <input class="input_fields" type="text" name="username" id="inputUserName"  placeholder="Username" required autofocus>
+            {% endif %}
+            <br>     
+            
+            {% if registration_form.password1.value %}
+            <input class="input_fields" type="password" name="password1" id="inputPassword1"  placeholder="Password" required value="{{ registration_form.password1.value }}"> 
+            {% else %}
+            <input class="input_fields" type="password" name="password1" id="inputPassword1"  placeholder="Password" required> 
+            {% endif %}
+            <br>
+
+            {% if registration_form.password2.errors %}
+            <input class="input_fields error_field giggle-effect" type="password" name="password2" id="inputPassword2"  placeholder="Password didn't match!" required>
+            {% else %}
+            <input class="input_fields" type="password" name="password2" id="inputPassword2"  placeholder="Confirm Password" required>
+            {% endif %}
+            <br>
+            <button class="login_btn" type="submit">Sign Up</button>
+        </form>
+        <div id="passwordError" style="color: red;"></div>
+    </div>
+    
+</div>
+<style>
+    @keyframes giggle {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(5px);
+        }
+    }
+    .giggle-effect {
+        display: inline-block;
+        animation: giggle 0.1s 10 alternate;
+    }
+    .error_field::placeholder { 
+        color: rgb(255, 173, 20);
+    }
+    #passwordError {
+        display: none;
+        height: 80px;
+        padding: 10px;
+        width: 210px;
+        border-radius: 5px;
+        margin: auto;
+        background-color: white;
+        position: relative;
+        top: -80%;
+
+    }
+    .form_area {
+        margin-top: 20vh;
+        display: grid;
+        align-items: center;
+
+    }
+    .form_container {
+        display: grid;
+        grid-template-rows: 100px 250px 50px;
+        background:  linear-gradient(to bottom,  rgba(255, 173, 20, 0.5), rgba(36, 13, 141, 0.5));
+        margin: auto;
+        height: 450px;
+        width: 400px;
+        grid-row: 2;
+        box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.5);
+        border-radius: 20px;
+        text-align: center;
+    }
+    .form_container h1 {
+        color: white;
+        margin: 40px;
+        grid-row: 1;
+    }
+    form {
+        grid-row: 2;
+    }
+    .input_fields {
+        margin-top: 30px;
+        height: 20px;
+        width: 220px;
+        border: none;
+        outline: none;
+        border-radius: 5px;
+        padding: 5px;
+        color: rgb(36, 13, 141);
+    }
+    .login_btn {
+        color: white;
+        margin: 30px;
+        width: 90px;
+        height: 40px;
+        padding: 10px;
+        text-align: center;
+        border: none;
+        background-color: black;
+        border-radius: 30px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+</style>
+
+<script>
+    const passwordInput = document.getElementById('inputPassword1');
+    const passwordError = document.getElementById('passwordError');
+
+    passwordInput.addEventListener('input', function() {
+        const password = passwordInput.value;
+        const minLength = 8; // Minimum length required
+        const requiredCharacters = /[a-z]/.test(password) && /[A-Z]/.test(password) && /\d/.test(password); // Check if password contains lowercase, uppercase, and digits
+
+        if (password.length < minLength && password.length != 0) {
+            passwordError.textContent = 'At least ' + minLength + ' characters long';
+            passwordError.style.display = 'block'
+        } else if (!requiredCharacters && password.length != 0) {
+            passwordError.textContent = 'Password must contain at least one lowercase letter, one uppercase letter, and one digit';
+            passwordError.style.display = 'block'
+        } else if (password.length == 0) {
+            passwordError.textContent = ''
+            passwordError.style.display = 'none'
+        }else {
+            passwordError.textContent = ''; // Clear error message if password meets all criteria
+            passwordError.style.display = 'none'
+
+        }
+});
+
+</script>
+{% endblock content %}
+
+

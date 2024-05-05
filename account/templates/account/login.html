@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<div class="form_area">
+    <div class="form_container">
+        <h1>PrompTale</h1>
+        <form  method="post">{% csrf_token %}
+            {% if error %}
+            <input class="input_fields error_field giggle-effect" type="email" name="email" id="inputEmail"  placeholder="{{ error }}">
+            {% else %}
+            <input class="input_fields" type="email" name="email" id="inputEmail"  placeholder="Email address" required autofocus>
+            {% endif %}
+
+            <input class="input_fields" type="password" name="password" id="inputPassword"  placeholder="Password" required>
+            
+            <br>
+            <button class="login_btn" type="submit">Log in</button>
+        </form>
+    </div>
+</div>
+<style>
+    @keyframes giggle {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(5px);
+        }
+    }
+    .giggle-effect {
+        display: inline-block;
+        animation: giggle 0.1s 10 alternate;
+    }
+    .error_field::placeholder { 
+        color: red;
+    }
+    .form_area {
+        margin-top: 25vh;
+        display: grid;
+        align-items: center;
+
+    }
+    .form_container {
+        display: grid;
+        grid-template-rows: 110px 200px 30px;
+        background:  linear-gradient(to bottom,  rgba(255, 173, 20, 0.5), rgba(36, 13, 141, 0.5));
+        margin: auto;
+        height: 350px;
+        width: 350px;
+        grid-row: 2;
+        box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.5);
+        border-radius: 20px;
+        text-align: center;
+    }
+    .form_container h1 {
+        color: white;
+        margin: 40px;
+    }
+    form {
+        grid-row: 2;
+    }
+    .input_fields {
+        margin-top: 30px;
+        height: 20px;
+        width: 220px;
+        border: none;
+        outline: none;
+        border-radius: 5px;
+        padding: 5px;
+    }
+    .login_btn {
+        color: white;
+        margin: 30px;
+        width: 90px;
+        height: 40px;
+        padding: 10px;
+        text-align: center;
+        border: none;
+        background-color: black;
+        border-radius: 30px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+</style>
+
+{% endblock content %}
+
+

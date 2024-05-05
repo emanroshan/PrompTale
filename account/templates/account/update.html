@@ -1,0 +1,246 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div id="close_update" class="update_container">
+    <div class="update_form_container">
+        <div class="main_panel">
+            <form id="update_form" method="post" enctype="multipart/form-data"> {% csrf_token %}
+            {% if request.user.profile_picture %}
+            <img class="profile_picture" src="{{ request.user.profile_picture.url }}" alt="">
+            {% else %}
+            <img class="profile_picture" src="{% static 'default_profile.png' %}" alt="">
+            {% endif %}
+            <input class="select_image" name="image" type="file" accept="image/*" value="{{ request.user.profile_picture }}">
+
+            {% if username_error %}
+            <input class="inputFields giggle-effect error_field" id="username" name="username" placeholder="{{ username_error }}" autocomplete="off">
+            {% else %}
+            <input class="inputFields" id="username" name="username" value="{{ request.user.username }}" autocomplete="off">
+            {% endif %}
+
+            {% if email_error %}
+            <input class="inputFields giggle-effect error_field" id="email" name="email" placeholder="{{ email_error }}" autocomplete="off">
+            {% else %}
+            <input class="inputFields" id="email" name="email" value="{{ request.user.email }}" autocomplete="off">
+            {% endif %}
+
+            {% if password_error %}    
+            <input type="password" class="inputFields giggle-effect error_field" name="old_pass" autocomplete="off" placeholder="{{ password_error }}">
+            {% else %}
+            <input type="password" class="inputFields" name="old_pass" autocomplete="off" placeholder="Old Password">
+            {% endif %}
+            <input type="password" class="inputFields" id="new_password" name="new_pass" autocomplete="off" placeholder="New Password">
+
+
+            <input class="btn" id="save_btn" type="submit" value="Save">
+            </form>
+            <div id="passwordError" style="color: red;"></div>
+        </div>
+        <div class="top_panel"><h1>Update Profile</h1></div>
+    </div>
+</div>
+<style>
+    @keyframes giggle {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(5px);
+        }
+    }
+    #passwordError {
+        display: none;
+        height: 50px;
+        padding: 10px;
+        width: 240px;
+        border-radius: 5px;
+        margin: auto;
+        background-color: white;
+        position: relative;
+        top: -100%;
+
+    }
+    input[type="file"]::-webkit-file-upload-button {
+        visibility: hidden;
+        display: none;
+    }   
+    input[type="file"] {
+        color: transparent;
+        display: none;
+    }
+    #file-upload-button {
+        display: none;
+    }
+    .select_image {
+        width: 70%;
+        height: auto;
+        margin: auto;
+    }
+    .profile_picture {
+        width: 200px;
+        height: 200px;
+        margin: 5%;
+        border-radius: 50%;
+    }
+    .profile_picture:hover {
+        opacity: 0.8;
+        cursor: pointer;
+    }
+    .giggle-effect {
+        display: inline-block;
+        animation: giggle 0.1s 10 alternate;
+    }
+    .error_field::placeholder { 
+        color: rgb(255, 173, 20);
+    }
+    .update_container {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center; /* Center horizontally */
+        align-items: center; /* Center vertically */
+    }
+    .update_form_container {
+        display: grid;
+        grid-template-rows: 15% 85%;
+        background:  linear-gradient(to bottom,  rgba(255, 173, 20, 0.5), rgba(36, 13, 141, 0.5));
+        width: 450px;
+        min-width: 450px;
+        height: 650px;
+        background-color: white;
+        box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.5);
+        border-radius: 20px;
+        transition: visibility 0s 0.5s, opacity 0.5s linear, transform 0.3s ease-out;
+
+    }
+    #update_form {
+        text-align: center;
+    }
+    .inputFields {
+        width: 50%;
+        min-width: 250px;
+        height: 15px;
+        border: 1px solid white;
+        outline: none;
+        margin: 10px 0px 15px 0px;
+        padding: 5px;
+        color:  rgba(36, 13, 141, 0.5);
+        background-color: transparent;
+        font-size: 15px;
+        border-radius: 5px;
+
+    }
+    .inputFields:focus {
+        background-color: rgba(255, 255, 255, 0.5);
+    }
+    .top_panel {
+        grid-row: 1;
+        grid-column: span 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .side_panel {
+        grid-column: 1;
+        grid-row: 2;
+        border: none;
+        border-radius: 20px 0px 0px 20px;
+    }
+    .main_panel {
+        grid-column: 2;
+        grid-row: 2;
+        padding: 0px 30px 30px 30px;
+        border-radius: 0px 20px 20px 0px;
+        display: grid;
+        grid-template-columns: 100%;
+
+    }
+    .main_panel form {
+        grid-row: 1;
+    }
+    .side_panel h1 {
+        text-align: center;
+        color: white;
+    }
+    .main_panel p {
+        color: white;
+        font-size: 20px;
+    }
+    .btn {
+        color: white;
+        width: 90px;
+        height: 40px;
+        margin: 20px;
+        padding: 10px;
+        text-align: center;
+        border: none;
+        background-color: black;
+        border-radius: 30px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+    .btn:hover {
+        box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.2);
+    }
+    .main_panel_btn_container {
+        grid-row: 2;
+        grid-column: 1;
+        text-align: center;
+    }
+    .visible {
+        opacity: 1;
+        transition-delay: 0s;
+        transform: scale(1); /* to add popup effect to profile drop down */
+    }
+    .giggle-effect {
+        display: inline-block;
+        animation: giggle 0.1s 5 alternate;
+    }
+</style>
+<script>
+    document.querySelector('.profile_picture').addEventListener('click', function() {
+        document.querySelector('.select_image').click();
+    });
+
+    document.querySelector('.select_image').addEventListener('change', function() {
+        var file = this.files[0];
+        if (file) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                document.querySelector('.profile_picture').src = e.target.result;
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+
+    const passwordInput = document.getElementById('new_password');
+    const passwordError = document.getElementById('passwordError');
+
+    passwordInput.addEventListener('input', function() {
+        const password = passwordInput.value;
+        const minLength = 8; // Minimum length required
+        const requiredCharacters = /[a-z]/.test(password) && /[A-Z]/.test(password) && /\d/.test(password); // Check if password contains lowercase, uppercase, and digits
+
+        if (password.length < minLength && password.length != 0) {
+            passwordError.textContent = 'At least ' + minLength + ' characters long';
+            passwordError.style.display = 'block'
+        } else if (!requiredCharacters && password.length != 0) {
+            passwordError.textContent = 'Password must contain at least one lowercase letter, one uppercase letter, and one digit';
+            passwordError.style.display = 'block'
+        } else if (password.length == 0) {
+            passwordError.textContent = ''
+            passwordError.style.display = 'none'
+        }else {
+            passwordError.textContent = ''; 
+            passwordError.style.display = 'none'
+            passwordInput.style.color = 'green'
+        }
+});
+
+</script>
+
+{% endblock content %}

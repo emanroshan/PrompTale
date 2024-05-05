@@ -1,0 +1,62 @@
+{% load static %}
+
+<div class="mySlides fade">
+    <div class="content" id="story_title">
+        <h1 >{{ Title }}</h1>
+    </div>
+  </div>
+
+{% for text, image in content %}
+<div class="mySlides fade">
+    <div class="numbertext">Page {{ forloop.counter }}</div>
+    <div class="content" style="background-color: {{ text.color }};">
+        <table>
+            <tr>
+                <td class="story_text" ><h1 style="font-family: {{ text.font }};">{{ text.text }}</h1></td>
+                <td class="theme_image"><img src="{{ image.image.url }}" alt=""></td>
+            </tr>
+        </table>
+    </div>
+</div>
+{% endfor %}
+</div>
+<style>
+    #story_title {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    #story_title h1 {
+        font-size: 5vw;
+        color: rgb(0, 0, 0);
+        font-family: "Apple Chancery", cursive;
+
+    }
+    .story_text h1{
+        color: rgb(0, 0, 0);
+        font-size: 2vw;
+    }
+    .story_text {
+        padding: 0px 10px 0px 50px;
+    }
+    .theme_image {
+        width: 30%;
+        height: auto;
+    }
+    .content table {
+        width: 90%;
+        height: 100vh;
+        margin: auto;
+    }
+    img {
+        width: 30vw;
+        height: 30vw;
+        margin: auto;
+        float: right;
+        padding: 20px;
+    }
+    .content {
+        width: 100%;
+        height: 100vh; 
+    }
+</style>
