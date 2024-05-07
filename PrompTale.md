@@ -53,22 +53,29 @@ PromptTale offers options for users to make their storybooks public or private, 
 ### User Interface
 #### Home Interface
 The home interface displays storybooks in card format, with hover functionality to reveal details. It includes buttons for signing up, logging in, and accessing user profiles.
-![account](https://github.com/emanroshan/PrompTale/assets/140584428/c3a378dd-5c6c-471b-a52b-c4d407e99f3c)
+![account](https://github.com/emanroshan/PrompTale/assets/140584428/a85334fa-104c-43a5-992f-368ed67d7974)
+![flip cards](https://github.com/emanroshan/PrompTale/assets/140584428/cf4d96b8-d269-4e54-8f86-88f6aa108b74)
 
 #### Account Creation Interface
 Users can create accounts by providing email, username, password, and password confirmation. Clear error messages are displayed for invalid inputs.
+![craete account](https://github.com/emanroshan/PrompTale/assets/140584428/2adcef55-e62e-4b81-840a-e5503d5606c0)
 
 #### Login Interface
 The login interface prompts users to enter their email and password, with options for forgot password and account creation.
+![login](https://github.com/emanroshan/PrompTale/assets/140584428/f5dabb88-d046-4496-bc61-640199ed3713)
+
 
 #### Update Profile
 Users can update their profiles by modifying username, email, old password, and new password. Error messages are displayed for existing usernames or emails.
+![edit-profile](https://github.com/emanroshan/PrompTale/assets/140584428/8ee609a4-ff46-4985-a045-d81d81c4c69d)
 
 #### Story Creation Interface
 The story creation interface allows users to input prompts for generating stories. A "create" button initiates the story generation process.
+![prompt](https://github.com/emanroshan/PrompTale/assets/140584428/e1b05dca-647d-4a73-8218-10b03e6fc880)
 
 #### Story Book Management Interface
 Users can manage their storybooks, with functions to make stories public or private, edit, or delete them. Clear visual cues distinguish between public and private stories.
+![customization](https://github.com/emanroshan/PrompTale/assets/140584428/34108874-bb8a-4c2e-b03a-2c7b0f0c001c)
 
 ## 4. System Interfaces
 #### Hardware Interfaces
