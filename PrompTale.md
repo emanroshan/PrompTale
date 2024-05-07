@@ -153,6 +153,7 @@ PromptTale represents a significant advancement in AI-driven storytelling, offer
 - Stable Diffusion. (n.d.). Image Generation. Retrieved from https://stablediffusion.com
 - Django Documentation. (n.d.). Web Framework. Retrieved from https://docs.djangoproject.com/en/stable/
 - Python Documentation. (n.d.). Programming Language. Retrieved from https://docs.python.org/3/
+- Sentence Transformers: Multilingual Sentence Embeddings using BERT / RoBERTa / XLM-RoBERTa & Co. with PyTorch. (n.d.). Retrieved from https://www.sbert.net/docs/pretrained_models.html#sentence-transformers.
 
 ### Dataset
 
