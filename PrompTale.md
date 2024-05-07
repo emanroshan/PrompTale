@@ -53,6 +53,7 @@ PromptTale offers options for users to make their storybooks public or private, 
 ### User Interface
 #### Home Interface
 The home interface displays storybooks in card format, with hover functionality to reveal details. It includes buttons for signing up, logging in, and accessing user profiles.
+![account](https://github.com/emanroshan/PrompTale/assets/140584428/c3a378dd-5c6c-471b-a52b-c4d407e99f3c)
 
 #### Account Creation Interface
 Users can create accounts by providing email, username, password, and password confirmation. Clear error messages are displayed for invalid inputs.
