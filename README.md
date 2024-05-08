@@ -71,11 +71,11 @@ Users can update their profiles by modifying username, email, old password, and 
 #### Story Creation Interface
 The story creation interface allows users to input prompts for generating stories. A "create" button initiates the story generation process.
 ![prompt](https://github.com/emanroshan/PrompTale/assets/140584428/91221d92-f395-4662-92bc-1c3300d69b6a)
-![flip cards](https://github.com/emanroshan/PrompTale/assets/140584428/0f45e70c-9e19-446a-bda3-80f639b76b36)
+
 
 #### Story Book Management Interface
 Users can manage their storybooks, with functions to make stories public or private, edit, or delete them. Clear visual cues distinguish between public and private stories.
-
+![flip cards](https://github.com/emanroshan/PrompTale/assets/140584428/0f45e70c-9e19-446a-bda3-80f639b76b36)
 ## 4. System Interfaces
 #### Hardware Interfaces
 PromptTale interacts with standard hardware components such as keyboards, mice, and displays, typical for web-based applications.
