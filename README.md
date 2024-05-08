@@ -53,18 +53,25 @@ PromptTale offers options for users to make their storybooks public or private, 
 ### User Interface
 #### Home Interface
 The home interface displays storybooks in card format, with hover functionality to reveal details. It includes buttons for signing up, logging in, and accessing user profiles.
+![customization](https://github.com/emanroshan/PrompTale/assets/140584428/bd1c3e80-46ff-40cd-a5f2-730f25eec013)
+![account](https://github.com/emanroshan/PrompTale/assets/140584428/b7435bfd-1356-401d-aef3-8faa7991f4be)
 
 #### Account Creation Interface
 Users can create accounts by providing email, username, password, and password confirmation. Clear error messages are displayed for invalid inputs.
+![craete account](https://github.com/emanroshan/PrompTale/assets/140584428/0fc10ee0-5eb1-4993-9d44-fbcf59f66998)
 
 #### Login Interface
 The login interface prompts users to enter their email and password, with options for forgot password and account creation.
+![login](https://github.com/emanroshan/PrompTale/assets/140584428/1bd7ec3c-5fcb-4b29-b7fd-70ad7bde8cfa)
 
 #### Update Profile
 Users can update their profiles by modifying username, email, old password, and new password. Error messages are displayed for existing usernames or emails.
+![edit-profile](https://github.com/emanroshan/PrompTale/assets/140584428/4bca6223-4d59-40a0-8fdd-8fe7d238c1ab)
 
 #### Story Creation Interface
 The story creation interface allows users to input prompts for generating stories. A "create" button initiates the story generation process.
+![prompt](https://github.com/emanroshan/PrompTale/assets/140584428/91221d92-f395-4662-92bc-1c3300d69b6a)
+![flip cards](https://github.com/emanroshan/PrompTale/assets/140584428/0f45e70c-9e19-446a-bda3-80f639b76b36)
 
 #### Story Book Management Interface
 Users can manage their storybooks, with functions to make stories public or private, edit, or delete them. Clear visual cues distinguish between public and private stories.
